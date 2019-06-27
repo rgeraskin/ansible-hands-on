@@ -1,0 +1,45 @@
+---
+- hosts: webservers
+  become: yes
+  vars_files:
+    - /home/ansible/confidential
+  tasks:
+    - name: deploy httpd
+      package:
+        name: httpd
+        state: latest
+      notify: httpd restart
+      tags:
+        - base-install
+
+    - name: configure virtual host
+      template:
+        src: /home/ansible/vhost.conf.j2
+        dest: /etc/httpd/conf.d/vhost.conf
+      notify: httpd restart
+      tags:
+        - vhost
+
+    - name: configure htpasswd
+      template:
+        src: /home/ansible/htpasswd.j2
+        dest: /etc/httpd/conf/htpasswd
+      notify: httpd restart
+      tags:
+        - vhost
+
+    - name: run the data job
+      command: /opt/data-job.sh
+      async: 600
+      poll: 0
+      tags:
+        - data-job
+      
+  handlers:
+    - name: restart and enable httpd
+      service:
+        name: httpd
+        state: restarted
+        enabled: yes
+      listen: httpd restart
+...
