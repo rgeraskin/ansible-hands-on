@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # to avoid the bug in ansible get_url that currently not allows using a file location for the checksum argument
-sudo yum -y install epel-release
-sudo yum -y update ansible
+ansible localhost -b -m package -a "name=epel-release state=latest"
+ansible localhost -b -m package -a "name=ansible state=latest"
 
 
 ansible qa-servers -m get_url -a "url=http://software.xyzcorp.com/enigma.tgz dest=/tmp checksum='sha256:http://software.xyzcorp.com/enigma-checksum.txt'"
