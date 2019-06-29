@@ -1,5 +1,4 @@
 # Description
-Description
 A common theme in everyday systems administration is the need to work with system files. It follows that any good configuration management or automation engine must be able to do the same. This exercise challenges students to use Ansible to execute varying tasks on remote systems involving file manipulation.
 
 # Additional Information and Resources
