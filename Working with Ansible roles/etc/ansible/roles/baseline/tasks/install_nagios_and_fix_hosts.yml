@@ -1,0 +1,9 @@
+---
+- name: install nagios
+  package: name=nrpe state=latest
+
+- name: add nagios host to /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "10.0.1.72 nagios.example.com"
+...

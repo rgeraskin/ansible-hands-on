@@ -1,0 +1,4 @@
+---
+- name: deploy motd
+  template: src=motd.j2 dest=/etc/motd
+...
